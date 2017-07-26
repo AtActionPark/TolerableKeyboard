@@ -3,122 +3,153 @@
   <head>
     <meta http-equiv="content-type" name="apple-mobile-web-app-capable" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ear Training app test</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <title>Super Keyborad</title>
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-
+    <link rel="stylesheet" type="text/css" href="css/github.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
-    <!--<script  src="js/helpers.js"></script>
-    <script  src="js/script.js"></script>-->
-   <script  src="js/transcompiledscript.js"></script>
+    <script  src="js/superKeyborad.min.js"></script>
+    <script  src="js/highlight.pack.js"></script>
+    <script  src="js/script.js"></script>
   </head>
 
   <body>
-    <a id="trigger_me" onclick="speech_text()"></a>
-    <div id="sidebar-black" class="sidebar-nav">
-      <nav id="navbar-black" class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="visible-xs"><div class="navbar-brand" href="/">EAR TRAINING</div></span>
-        </div>
-        <span class="visible-xs">
-          <button id="start" class="btn start" onClick="start()">Start</button> 
-        </span>
-        <div class="navbar-collapse collapse sidebar-navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="hidden-xs"><div class="navbar-brand" href="/">EAR TRAINING</div></li>
+    <div class="main">
+      <h1>SUPER KEYBORAD</h1>
 
-            <li class="hidden-xs startDiv">
-              <button id="start" class="btn start" onClick="start()">Start</button> 
-            </li>
+      <p>Easy to set up HTML custom keyboard. Mouse and key bindings, no dependencies, easy to plug into the web audio API. </p>
 
-            <li class="dropdown">
-              <a href="javascript:void(0);" class="dropdown-toggle"><i class="glyphicon glyphicon-record"></i> OPTIONS <b class="caret"></b></a>
-              <ul class="dropdown-menu"> 
-                <div id="params">
-                  Repetitions: <input id='nbOfTimePlayed'  class="bg" value = '3' type=number min=1 max=10 /></br>
-                  Time btw reps: <input id='timeBetweenRepetitions'  class="bg" value = '3' type=number min=0.1 max=10 /></br>
-                  Time btw notes: <input id='timeBetweenNotes'  class="bg" value = '0.9' type=number min=0 max=10 /></br>
-                  Note Duration: <input id='noteDuration'  class="bg" value = '1.5' type=number min=0.1 max=10 /></br>
-                  Order: 
-                  <select class=" inline" id="order" onchange="getUserParams()" >
-                    <option value="ascending">Ascending</option>
-                    <option value="descending">Descending</option>
-                    <option value="both" selected="selected">Both</option>
-                  </select> 
-                  <div id="talkDiv">Announce answer: <input id="talk"  type="checkbox" checked></div>
-                </div>
-              </ul>
-            </li>
-                   
-            <li class="dropdown">
-              <a href="javascript:void(0);" class="dropdown-toggle" ><i class="glyphicon glyphicon-record"></i> INTERVALS <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <div id="intervals">
-                All/None : <input id="allNone" type="checkbox" onchange="allNone()"></br></br> 
-                Unison : <input id="unison" type="checkbox" checked onchange="getUserParams()"></br>   
-                Minor second : <input id="minorSecond" type="checkbox" onchange="getUserParams()"></br> 
-                Major second : <input id="majorSecond" type="checkbox" onchange="getUserParams()"></br>  
-                Minor third : <input id="minorThird" type="checkbox" checked onchange="getUserParams()"></br>  
-                Major third : <input id="majorThird" type="checkbox" checked onchange="getUserParams()"></br>  
-                Perfect fourth : <input id="perfectFourth" type="checkbox" checked onchange="getUserParams()"></br>  
-                Tritone : <input id="tritone" type="checkbox" onchange="getUserParams()"></br>  
-                Perfect fifth : <input id="perfectFifth" type="checkbox" checked onchange="getUserParams()"></br>  
-                Minor sixth : <input id="minorSixth" type="checkbox" onchange="getUserParams()"></br>  
-                Major sixth : <input id="majorSixth" type="checkbox" onchange="getUserParams()"></br>  
-                Minor seventh : <input id="minorSeventh" type="checkbox" onchange="getUserParams()"></br>  
-                Major seventh : <input id="majorSeventh" type="checkbox" onchange="getUserParams()"></br>  
-                Octave : <input id="octave" type="checkbox" checked onchange="getUserParams()"></br>  
-                Minor ninth : <input id="minorNinth" type="checkbox" onchange="getUserParams()"></br>  
-                Major ninth : <input id="majorNinth" type="checkbox" onchange="getUserParams()"></br>  
-                Minor tenth : <input id="minorTenth" type="checkbox" onchange="getUserParams()"></br>  
-                Major tenth : <input id="majorTenth" type="checkbox" onchange="getUserParams()"></br>  
-                Perfect eleventh : <input id="perfectEleventh" type="checkbox" onchange="getUserParams()"></br>  
-                Octave tritone : <input id="octaveTritone" type="checkbox" onchange="getUserParams()"></br>  
-                Perfect twelfth : <input id="perfectTwelfth" type="checkbox" onchange="getUserParams()"></br>  
-                Minor thirteenth : <input id="minorThirteenth" type="checkbox" onchange="getUserParams()"></br>  
-                Major thirteenth : <input id="majorThirteenth" type="checkbox" onchange="getUserParams()"></br>  
-                Minor fourteenth : <input id="minorFourteenth" type="checkbox" onchange="getUserParams()"></br>  
-                Major fourteenth : <input id="majorFourteenth" type="checkbox" onchange="getUserParams()"></br>  
-                Double Octave : <input id="doubleOctave" type="checkbox" onchange="getUserParams()"></br>  
-                </div>
-              </ul>
-            </li>
-                 
-            <li class="dropdown">
-              <a href="javascript:void(0);" class="dropdown-toggle" ><i class="glyphicon glyphicon-record"></i> SYNTH <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <div id="seedDiv">
-                Synth Preset: 
-                <select  id="synthPreset"  onchange="changePreset()">
-                  <option value="1" selected="selected">1</option>
-                  <option value="2">2</option>
-                </select></br>
-                <button onClick = "randomize()" id='random'>Randomize</button>
-              </div>           
-              </ul>
-            </li>
+      <h2>DOWNLOAD</h2>
 
-            <li class="hidden-xs" id="githubDiv">
-              <a href="https://github.com/AtActionPark/EarTraining"> <img id="github" src="img/github.png"></a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <p>Grab the <a href="https://github.com/AtActionPark/SuperKeyborad/blob/master/js/script.js">full script</a>, or the <a href="https://github.com/AtActionPark/SuperKeyborad/blob/master/js/script.min.js">minified version</a>.</p>
+
+      <h2>SET UP</h2>
+
+      <p>Add the superKeyborad.js file to your project, create a keyborad object and a div to hold it, and voila. You can start playing the final countdown.</p>
+      
+        <pre><code class="js">
+          // In Script file
+
+          $(document).ready(function(){ 
+            // Set up the keyboard. Settings will fall back on default values if not provided
+            // By default, the keyboard will be 3 octaves, starting on a C2
+            //   and will connect to a simple square synth 
+            let basicKeyborad = new Keyborad()
+          })
+
+          // In HTML file
+
+          // If not divID was specified during creation, the script looks for &lt;div id="keyborad">
+          // If it is not present in the HTML page, the constructor will 
+          //   create and append one on the bottom of the page.
+          // For further styling, its better to include it manually where needed
+          &lt;div id="keyborad">&lt;/div>;
+        </pre></code>
+
+        <p>It can be played with the mouse, or, by default, with the keys A through K for the middle octave.</p>
+        
+      <div id="keyborad"></div>
+      
+      <h2>CUSTOM SET UP</h2>
+
+      <p>The keyboard looks, key bindings, and action on happening on pressing/releasing a note can also be customized</p>
+
+      <pre><code class="js">
+        // In Script file
+
+        $(document).ready(function(){ 
+          // Set up the keyboard. 
+
+          // Settings are optional and will fall back on default values if not provided
+          // Here is the full list:
+          let customKeyborad = new Keyborad({
+            divID: 'customKeyborad', //The id of the div that will contain the keyboard
+            // If empty, a new div of class "keyborad" will be appended to the page's body
+            octaves: 2, //Number of octaves
+            width:600, //Width of the full keyboard in px
+            height:150, //Height of the white notes
+            firstNote: 'F#2',//Starting note
+            showKey:true, //Display the keybindings on the notes, if any
+            autoSetUp:false, //If true, will set up an audio context and a simple synth. 
+                             //If not, pressNote and releaseNote functions need to be written
+                             //No audio context will be created
+            selectColor:'#7FDBFF', //Highlight color of any pressed note
+            whiteNoteColor: '#F8F8FF', //Color of the white notes
+            blackNoteColor: '#001f3f', //Color of the black notes
+            // Borders/Casing of the keyboard.
+            borderSize: 20, // Size of the left and right borders
+            borderSizeOffset: -5, //Difference between the side borders height and the notes heights
+            borderSizeTop: 100, //Size of the top border
+            borderColor: '#579EBF', //Color of the borders
+            borderBorderSize: 5, //Size of the border's borders
+            borderBorderColor: '#001f3f', //Color of the border's borders and of the text
+            borderRadius: 10, //Radius of the borders 
+            borderText: 'BOOYA!', //Text of the top border
+          })
+
+          // Because we dont use autoSetUp, we need to initialize a context and gain
+          let context, gain, nodes = [];
+
+          context = new AudioContext();
+          mixNode = context.createGain();
+          mixNode.gain.value = 0.3;
+          mixNode.connect(context.destination); 
+
+          // If autoSetUp == true, the pressNote and releaseNote functions will be prefilled
+          // If not, they need to be filled with the sound playing logic.
+          // We will set up a simple synth 
+
+          // For each note, the synth will play 2 detuned oscillators at the note frequency
+          customKeyborad.pressNote = function(frequency){
+            let oscillators = [];
+
+            let osc = context.createOscillator();
+            osc.type = 'square';
+            oscillators.push(osc)
+
+            let osc2 = context.createOscillator();
+            osc2.type = 'sawtooth';
+            osc2.detune.value = 10;
+            oscillators.push(osc2)
+
+            oscillators.forEach(o =>{
+              o.frequency.value = frequency ;
+              o.connect(mixNode);
+              o.start(0);
+              nodes.push(o);
+            })
+          }
+
+          // For each key released, the synth will loop through the oscillators,
+          //   check the frequency, and stop them if they match 
+          customKeyborad.releaseNote = function(frequency){
+            let newNodes = [];
+              for (let i = 0; i < nodes.length; i++) {
+                if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
+                  nodes[i].stop(0);
+                  nodes[i].disconnect();
+                } else {
+                    newNodes.push(nodes[i]);
+                  }
+                }
+            nodes = newNodes;
+          }
+
+          //example of adding a new key binding
+          //by default keys A through L are binded to C3 through C4
+          //only one keyboard (the last one created) can be hooked up to the keys
+          //thats one the first one is not working
+          customKeyborad.addKeyBinding('Z','F#2')
+          customKeyborad.addKeyBinding('X','F#4')
+        });
+
+        // In HTML file
+
+        &lt;div id="keyborad">&lt;/div>;
+      </pre></code>
+
+      <button onclick="createKeyboard()""><b>Run</b></button> the code and it shall appear in its magnificent glory.
+      <div id="customKeyborad"></div>
+
     </div>
-    
-    
-    <main id="page-wrapper">
-      <div id="wrapper"> 
-        <div  id='osc'></div>
-        <div id='keyboard'></div>
   </body>
 </html>
