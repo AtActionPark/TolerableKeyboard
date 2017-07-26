@@ -107,7 +107,10 @@
 
 		this.firstNote = settings.firstNote || 'C2';
 		this.showKey = settings.showKey || false;
-		this.autoSetUp = settings.autoSetUp || true;
+		if(settings.autoSetUp == undefined)
+		this.autoSetUp =  true;
+			else
+		this.autoSetUp =  settings.autoSetUp;
 
 		this.selectColor = settings.selectColor || '#7FDBFF';
 		this.whiteNoteColor = settings.whiteNoteColor || 'white';
