@@ -12,4 +12,4 @@ let basicKeyborad = new Keyborad()
 ```
 And voila, instant playable keyboard, hooked up to a simple synth.
 
-Visit the [SuperKeyborad page](https://atactionpark.github.io/SuperKeyborad/) for more info on customisation
+Visit the [SuperKeyborad page](https://atactionpark.github.io/SuperKeyborad/) for more info on customisation.
