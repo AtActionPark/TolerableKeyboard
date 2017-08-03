@@ -1,9 +1,10 @@
 # SuperKeyborad
 
-Easy to set up HTML custom keyboard. Mouse and key bindings, no dependencies, easy to plug into the web audio API, and lots of possible customisation.
+Easy to set up HTML custom keyboard. Mouse and key bindings, easy to plug into the web audio API, and lots of possible customisation.
 
-#### Add the script to your project
+#### Add the script to your project. Will also need jQuery to work
 ```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="scripts/superKeyborad.min.js"></script>
 ```
 #### Create a keyboard somewhere in your script
