@@ -324,8 +324,8 @@
 
 			keyBindingDiv.innerHTML = key
 			keyBindingDiv.style.userSelect = 'none'
-			keyBindingDi.style.webkitUserSelect = 'none'
-			keyBindingDi.style.MozUserSelect = 'none'
+			keyBindingDiv.style.webkitUserSelect = 'none'
+			keyBindingDiv.style.MozUserSelect = 'none'
 			keyBindingDiv.style.color = color == 'white' ? this.blackNoteColor : this.whiteNoteColor;
 			keyBindingDiv.style.position = 'absolute'
 			keyBindingDiv.style.bottom = 0
