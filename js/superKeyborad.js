@@ -222,6 +222,8 @@
 			top.style.fontWeight = 'bold';
 			top.style.fontSize = this.borderSizeTop*5/6+ 'px';
 			top.style.userSelect = 'none'
+			top.style.webkitUserSelect = 'none'
+			top.style.MozUserSelect = 'none'
 			top.style.color = this.borderBorderColor
 			top.style.width = (this.width + this.borderBorderSize-3) + 'px'
 			top.style.height = (this.noteHeight + this.borderSizeTop -1*this.borderBorderSize + this.borderSizeOffset)+'px'
@@ -322,6 +324,8 @@
 
 			keyBindingDiv.innerHTML = key
 			keyBindingDiv.style.userSelect = 'none'
+			keyBindingDi.style.webkitUserSelect = 'none'
+			keyBindingDi.style.MozUserSelect = 'none'
 			keyBindingDiv.style.color = color == 'white' ? this.blackNoteColor : this.whiteNoteColor;
 			keyBindingDiv.style.position = 'absolute'
 			keyBindingDiv.style.bottom = 0
