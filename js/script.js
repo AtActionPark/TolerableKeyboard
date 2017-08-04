@@ -1,9 +1,9 @@
-$(document).ready(function(){ 
-	hljs.initHighlightingOnLoad()
-	//Set up the keyboard. settings are optional and will fall back on default values if needed
-	let basicKeyborad = new Keyborad()
-    
-});
+document.addEventListener('DOMContentLoaded', function(){ 
+    hljs.initHighlightingOnLoad()
+    //Set up the keyboard. settings are optional and will fall back on default values if needed
+    let basicKeyborad = new Keyborad()
+    //createKeyboard()
+}, false);
 
 function createKeyboard(){
 	let customKeyborad = new Keyborad({

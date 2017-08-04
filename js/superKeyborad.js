@@ -1,6 +1,6 @@
 //Creates a small keyboard, with styling, mouse and key bindings, that can be plugged in easily to the web audio API
 (function(){
-	let self = this;
+
 	let mouseIsDown = false;
 	let keysDown = {};
 	let keyPressed;
@@ -131,14 +131,19 @@
 	//Creates the keyboard div, fills the keyboardMap and adds mouse/keyboard listeners
 	Keyborad.prototype.init = function(){
 		//Find the div that will contain the keyboard. If there is not, it will be created
-		let div = '#' + this.divID
 		//If we cant find the div, create one an append it directly to the body
-		if (!$(div).length)
-			$('body').append('<div id="' + this.divID + '"</div>')
+		let div = document.getElementById(this.id)
+		if (div == null){
+			let d = document.createElement("div")
+			d.id = this.divID
+			document.body.appendChild(d)
+		}
 		//Empty it (needs to be rebuilt after changing key bindings)
-		$(div).empty()
-		$(div).css("height", this.noteHeight+this.borderSizeTop);
-		$(div).css("width", this.width);
+		let keyborad = document.getElementById(this.divID)
+
+		keyborad.innerHTML = ""
+		keyborad.style.height = this.noteHeight+this.borderSizeTop + 'px'
+		keyborad.style.width = this.width + 'px'
 
 		//Find the order of the first note relative to a C (C->0, C#->1 ...)
 		//Find the Note name of the user desired first note
@@ -165,7 +170,13 @@
 		}
 		
 		//Append the list that will contain all of the notes, along with basic styling
-		$(div).append('<ul style=" margin:0px;list-style-type: none;position: relative;" ondragstart="return false;" ondrop="return false;"></ul>')
+		let ul = document.createElement("ul")
+		ul.style.margin = "0px"
+		ul.style.listStyle = "none"
+		ul.style.position = "relative"
+		ul.ondragstart = function(){return false;}
+		ul.ondrop = function(){return false;}
+		keyborad.appendChild(ul)
 		
 		//notes positions in the div are based on ID, if we skip ids (we dont start on a C), we need to offset the notes position.
 		//If we start on a sharp note, the offset is slightly different
@@ -177,8 +188,12 @@
 		for(let i = 0;i<this.octaves*7 +orderNotes[orderOfFirstNote] + 1 ;i++){
 			//for each i, add one white note, starting after we reach the user requested first note
 			//Only add a note if the id has reached the user start note
-			if(id>=orderOfFirstNote && ( i < this.octaves*7 +orderNotes[orderOfFirstNote] + 1 || alteration =='#'))
-				$(div + " ul").append('<li>' + this.createNote('white',this.noteWidth*i-offset + this.borderSize + this.borderBorderSize ,id)+ '</li>')
+			if(id>=orderOfFirstNote && ( i < this.octaves*7 +orderNotes[orderOfFirstNote] + 1 || alteration =='#')){
+				let li= document.createElement("li")
+				li.appendChild(this.createNote('white',this.noteWidth*i-offset + this.borderSize + this.borderBorderSize ,id))
+				ul.appendChild(li)
+
+			}
 			//if we dont add a note, offset the notes position
 			else
 				offset+=this.noteWidth
@@ -187,69 +202,74 @@
 
 			//and add one black note, except for E and B (no #)
 			if(i%7 != 2 && i%7 != 6){
-				if(id>=orderOfFirstNote && ( i < this.octaves*7 +orderNotes[orderOfFirstNote] + (alteration == '#'?1:0)))
-					$(div + " ul").append('<li>' + this.createNote('black',this.noteWidth*i+this.noteWidth/3*2-offset+ this.borderSize +  this.borderBorderSize,id)+ '</li>')
+				if(id>=orderOfFirstNote && ( i < this.octaves*7 +orderNotes[orderOfFirstNote] + (alteration == '#'?1:0))){
+					let li= document.createElement("li")
+					li.appendChild(this.createNote('black',this.noteWidth*i+this.noteWidth/3*2-offset+ this.borderSize +  this.borderBorderSize,id))
+					ul.appendChild(li)
+				}
 				id++;
 			}
 		}
 
 		//Add borders div to the keyboard if necessary
 		if(this.borderSize>0 || this.borderSizeTop>0){
-			
-			let borderTop = 'border-top: '+ this.borderBorderSize +'px solid ' + this.borderBorderColor+ ';'
-			let borderLeft = 'border-left: '+ this.borderBorderSize +'px solid ' + this.borderBorderColor+ ';'
-			let borderRight = 'border-right: '+ this.borderBorderSize +'px solid ' + this.borderBorderColor+ ';'
-			let borderBottom = 'border-bottom: '+ this.borderBorderSize +'px solid ' + this.borderBorderColor+ ';'
+			let top = document.createElement("div")
 
-			let borderTopLeftRadius = 'border-top-left-radius: '+this.borderRadius+'px;'
-			let borderTopRightRadius = 'border-top-right-radius: '+this.borderRadius+'px;'
-			let borderBottomLeftRadius = 'border-bottom-left-radius: '+this.borderRadius+'px;'
-			let borderBottomRightRadius = 'border-bottom-right-radius: '+this.borderRadius+'px;'
+			top.classList.add("keyboradTop")
+			top.innerHTML = this.borderText
+			top.style.zIndex = -100;
+			top.style.textAlign = 'center';
+			top.style.fontWeight = 'bold';
+			top.style.fontSize = this.borderSizeTop*5/6+ 'px';
+			top.style.userSelect = 'none'
+			top.style.color = this.borderBorderColor
+			top.style.width = (this.width + this.borderBorderSize-3) + 'px'
+			top.style.height = (this.noteHeight + this.borderSizeTop -1*this.borderBorderSize + this.borderSizeOffset)+'px'
+			top.style.backgroundColor = this.borderColor
+			top.style.borderTop = this.borderBorderSize +'px solid ' + this.borderBorderColor
+			top.style.borderRight = this.borderBorderSize +'px solid ' + this.borderBorderColor
+			top.style.borderLeft = this.borderBorderSize +'px solid ' + this.borderBorderColor
+			top.style.borderBottom = this.borderBorderSize +'px solid ' + this.borderBorderColor
+			top.style.borderTopLeftRadius = this.borderRadius+'px'
+			top.style.borderTopRightRadius = this.borderRadius+'px'
+			top.style.borderBottomLeftRadius = this.borderRadius+'px'
+			top.style.borderBottomRightRadius = this.borderRadius+'px'
 
-			let backgroundColor = 'background-color:'+ this.borderColor+';'
-
-			let width= 'width:' + (this.borderSize + this.width/2) + 'px;'
-			let height= 'height:'+(this.noteHeight + this.borderSizeTop -1*this.borderBorderSize + this.borderSizeOffset)+'px;'
-
-			let textStyle = 'text-align:center;font-weight:bold;font-size:' + this.borderSizeTop*5/6+ 'px; color:' + this.borderBorderColor+ ';'
-			let noSelect = '-webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;'
-			let zIndex = "z-index : -100;"
-
-
-			$(div).append('<div class="keyboradTop" style="' + zIndex+textStyle + noSelect+ borderTop +  borderLeft + borderRight + borderTopLeftRadius +borderTopRightRadius + 'top:0px;width:'+(this.width + this.borderBorderSize-3)+'px;height:'+this.borderSizeTop+'px; px;'+ backgroundColor +'">' + this.borderText + '</div>')
-			$(div).append('<div class="keyboradLeft" style="' + zIndex + borderTop +borderBottom+ borderLeft + borderBottomLeftRadius + borderTopLeftRadius + ' position: relative;top:-' + (this.borderSizeTop + this.borderBorderSize) + 'px;left:0px; '+ width + height+ backgroundColor +'"></div>')
-			$(div).append('<div class="keyboradRight" style="' + zIndex+ borderTop +borderBottom+ borderRight + borderBottomRightRadius + borderTopRightRadius + 'position:relative;top:-' + (2*this.borderSizeTop+this.noteHeight + 2*this.borderBorderSize+this.borderSizeOffset)+ 'px;left:'+ (this.width - this.borderSize -this.width/2+ this.borderBorderSize+2) +'px;'+ width + height+backgroundColor +'"></div>')
+			keyborad.appendChild(top)
 		}
 
 		//For each note div created, add mouse listeners
 		let self = this;
-		let nDiv = '#' + this.divID + ' .note'
-		$(nDiv).mousedown(function(){
-			let id = $(this).attr('id')
-			mouseIsDown = true;
-			self.onPressNoteID(id)
-		});
-		$(nDiv).mouseup(function(){
-			let id = $(this).attr('id')
-			self.onReleaseNoteID(id)
-		});
-		$(nDiv).mouseenter(function(){
-			if(!mouseIsDown)
-				return
-			let id = $(this).attr('id')
-			self.onPressNoteID(id)
-		});
-		$(nDiv).mouseleave(function(){
-			if(!mouseIsDown)
-				return
-			if($(this).hasClass('played')){
-				let id = $(this).attr('id')
-				self.onReleaseNoteID(id)
+		
+		let nDiv = document.getElementById(this.divID).getElementsByClassName('note')
+
+		
+
+		for(let i = 0;i<nDiv.length;i++){
+			nDiv[i].onmousedown = function(){
+				mouseIsDown = true;
+				self.onPressNoteID(this.id)
 			}
-		});
-		$(document).mouseup(function(){
+			nDiv[i].onmouseup = function(){
+				self.onReleaseNoteID(this.id)
+			}
+			nDiv[i].onmouseover = function(){
+				if(!mouseIsDown)
+					return
+				self.onPressNoteID(this.id)
+			}
+			nDiv[i].onmouseout = function(){
+				if(!mouseIsDown)
+					return
+				if(this.classList.contains('played')){
+					self.onReleaseNoteID(this.id)
+				}
+			}
+		}
+
+		document.onmouseup = function(){
 			mouseIsDown = false;
-		});
+		}
 		//And keyboard listeners associated
 		document.onkeydown = function(evt) {
 		    keyPressed = evt.keyCode || window.event;
@@ -271,50 +291,55 @@
 		    self.onReleaseNoteID(getKeyByValue(self.keyboardMap,self.keysMap[pressed]))
 		};
 	}
+
 	//Create one div note with styling
 	// Depending on the color, the styling, position and dimensions will be different
 	Keyborad.prototype.createNote = function(color, position, id){
-		let colorClass = '"class="note ' + color + '"'
+		let note = document.createElement("div")
 
-		let pos = 'position:absolute; left:' + position + 'px;top:' +(this.borderSizeTop + this.borderBorderSize) + 'px;'
+		note.id = id
+		note.classList.add('note') 
+		note.classList.add(color) 
+		note.style.position = 'absolute' 
+		note.style.left = position + 'px' 
+		note.style.top = (this.borderSizeTop + this.borderBorderSize) + 'px' 
+		note.style.width = (color == 'white'? this.noteWidth : this.noteWidth*2/3) + 'px'
+		note.style.height = (color =='white'? this.noteHeight : this.noteHeight*5.5/9) + 'px'
+		note.style.backgroundColor = (color == 'white'? this.whiteNoteColor:this.blackNoteColor)
+		note.style.zIndex = color == 'black' ? 10 : 0 //black notes on top
+		note.style.border = '1px solid black'
+		note.style.borderBottomLeftRadius = '5px'
+		note.style.borderBottomRightRadius = '5px'
 
-		let w = color == 'white'? this.noteWidth : this.noteWidth*2/3;
-		let h = color == 'white'? this.noteHeight : this.noteHeight*5.5/9;
-		let width  = 'width:'+ w+'px;'
-		let height  = 'height:'+ h+'px;'
-
-		let colorBackground = 'background-color: ' + (color == 'white'? this.whiteNoteColor:this.blackNoteColor) + ';'
-		let border = 'border: 1px solid black; border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;'
 		
-		//black keys show on top
-		let zIndex = color == 'black' ? 'z-index: 10;' : ''
-
-
 		//If we want to display key bindings on keyboard
-		let keyBindingKey = '';
-		
 		if(this.showKey){
 			//Find the key char associated to the note, if it exists
 			let key = getKeyByValue(this.keysMap,this.keyboardMap[id]);
 			if( key == undefined ) key = ''
-			let noSelect = '-webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;'
-			let markingColor = color == 'white'? 'color: ' + this.blackNoteColor + ';': 'color:' + this.whiteNoteColor + ';' 
-			let offset = color=='white'? this.noteWidth/3 : this.noteWidth/6
-			let markingPosition = 'position:absolute;bottom:0px;padding:' + offset + 'px;'
 
-			keyBindingKey = '<div style="' +  noSelect + markingColor + markingPosition + '">' + key + '</div'
+			let keyBindingDiv = document.createElement("div")
+
+			keyBindingDiv.innerHTML = key
+			keyBindingDiv.style.userSelect = 'none'
+			keyBindingDiv.style.color = color == 'white' ? this.blackNoteColor : this.whiteNoteColor;
+			keyBindingDiv.style.position = 'absolute'
+			keyBindingDiv.style.bottom = 0
+			keyBindingDiv.style.padding = (color== 'white' ? this.noteWidth/3 : this.noteWidth/6) + 'px'
+			note.appendChild(keyBindingDiv)
 		}
-		
-		//Full div/css for a single note
-		return  '<div  id="' + id + colorClass + '" style = "font-weight:bold;'+  pos + width +  height +  colorBackground + border + zIndex +'">'+keyBindingKey +'</div>'
+
+		return note
 	}
 	//Takes care of styling the keyboard and finding the frequency. What happens when the note is pressed is defined in pressNote()
 	Keyborad.prototype.onPressNoteID = function(id){
 		if("undefined" === typeof this.keyboardMap[id])
 			return
-		let nDiv = '#' + this.divID + ' #' + id
-		$(nDiv).css('background-color', this.selectColor)
-		$(nDiv).addClass('played')
+
+		let note =  idWithinId(this.divID,id)
+
+		note.style.backgroundColor = this.selectColor
+		note.classList.add('played')
 
 		let frequency = getFrequency(this.keyboardMap[id])
 		this.pressNote(frequency)
@@ -336,13 +361,14 @@
 	Keyborad.prototype.onReleaseNoteID = function(id){
 		if("undefined" === typeof this.keyboardMap[id])
 			return
-		let nDiv = '#' + this.divID + ' #' + id
-		let c = $(nDiv).hasClass('white')? 'white': 'black'
-		$(nDiv).css('background-color', (c=='white'? this.whiteNoteColor: this.blackNoteColor))
-		$(nDiv).removeClass('played')
+
+		let note =  idWithinId(this.divID,id)
+
+		let c = note.classList.contains('white')? 'white': 'black'
+		note.style.backgroundColor = c=='white'? this.whiteNoteColor: this.blackNoteColor
+		note.classList.remove('played')
 
 		let frequency = getFrequency(this.keyboardMap[id])
-
 	    this.releaseNote(frequency)
 	}
 	Keyborad.prototype.releaseNote = function(frequency){
@@ -365,5 +391,17 @@
 	Keyborad.prototype.addKeyBinding = function(key,note){
 		this.keysMap[key] = note;
 		this.init()
+	}
+
+	//helper for finding an elemnt by ID within a specific ID
+	//bad practice, but the notes id can be duplicate if multiple keyboards
+	//because it serves as noth id and index
+	function idWithinId(parentID,childID){
+		let parent = document.getElementById(parentID)
+		let children = parent.getElementsByTagName( 'div' )
+		for(let i = 0;i<children.length;i++){
+			if(children[i].id == childID)
+				return children[i]
+		}
 	}
 })();
