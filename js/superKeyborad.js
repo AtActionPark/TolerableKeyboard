@@ -132,7 +132,7 @@
 	Keyborad.prototype.init = function(){
 		//Find the div that will contain the keyboard. If there is not, it will be created
 		//If we cant find the div, create one an append it directly to the body
-		let div = document.getElementById(this.id)
+		let div = document.getElementById(this.divID)
 		if (div == null){
 			let d = document.createElement("div")
 			d.id = this.divID
