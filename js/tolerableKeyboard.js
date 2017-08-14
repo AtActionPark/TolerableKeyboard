@@ -66,7 +66,7 @@
 
 	//Constructor. Gets user params and creates the keyboard
 	//All settings are optional and will fall back on default values
-	Keyborad = function(settings){
+	TolerableKeyboard = function(settings){
 		if(settings == undefined)settings = {}
 
 		//Maps the notes id's to the notes names
@@ -89,7 +89,7 @@
 		  'U': "A#3",
 		}
 
-		this.divID = settings.divID || 'keyborad';
+		this.divID = settings.divID || 'tolerableKeyboard';
 		this.octaves = settings.octaves || 3;
 		this.width = settings.width || 800;
 
@@ -129,7 +129,7 @@
 		this.init();
 	}
 	//Creates the keyboard div, fills the keyboardMap and adds mouse/keyboard listeners
-	Keyborad.prototype.init = function(){
+	TolerableKeyboard.prototype.init = function(){
 		//Find the div that will contain the keyboard. If there is not, it will be created
 		//If we cant find the div, create one an append it directly to the body
 		let div = document.getElementById(this.divID)
@@ -139,11 +139,11 @@
 			document.body.appendChild(d)
 		}
 		//Empty it (needs to be rebuilt after changing key bindings)
-		let keyborad = document.getElementById(this.divID)
+		let tolerableKeyboard = document.getElementById(this.divID)
 
-		keyborad.innerHTML = ""
-		keyborad.style.height = this.noteHeight+this.borderSizeTop + 'px'
-		keyborad.style.width = this.width + 'px'
+		tolerableKeyboard.innerHTML = ""
+		tolerableKeyboard.style.height = this.noteHeight+this.borderSizeTop + 'px'
+		tolerableKeyboard.style.width = this.width + 'px'
 
 		//Find the order of the first note relative to a C (C->0, C#->1 ...)
 		//Find the Note name of the user desired first note
@@ -176,7 +176,7 @@
 		ul.style.position = "relative"
 		ul.ondragstart = function(){return false;}
 		ul.ondrop = function(){return false;}
-		keyborad.appendChild(ul)
+		tolerableKeyboard.appendChild(ul)
 		
 		//notes positions in the div are based on ID, if we skip ids (we dont start on a C), we need to offset the notes position.
 		//If we start on a sharp note, the offset is slightly different
@@ -215,7 +215,7 @@
 		if(this.borderSize>0 || this.borderSizeTop>0){
 			let top = document.createElement("div")
 
-			top.classList.add("keyboradTop")
+			top.classList.add("tolerableKeyboardTop")
 			top.innerHTML = this.borderText
 			top.style.zIndex = -100;
 			top.style.textAlign = 'center';
@@ -237,7 +237,7 @@
 			top.style.borderBottomLeftRadius = this.borderRadius+'px'
 			top.style.borderBottomRightRadius = this.borderRadius+'px'
 
-			keyborad.appendChild(top)
+			tolerableKeyboard.appendChild(top)
 		}
 
 		//For each note div created, add mouse listeners
@@ -296,7 +296,7 @@
 
 	//Create one div note with styling
 	// Depending on the color, the styling, position and dimensions will be different
-	Keyborad.prototype.createNote = function(color, position, id){
+	TolerableKeyboard.prototype.createNote = function(color, position, id){
 		let note = document.createElement("div")
 
 		note.id = id
@@ -336,7 +336,7 @@
 		return note
 	}
 	//Takes care of styling the keyboard and finding the frequency. What happens when the note is pressed is defined in pressNote()
-	Keyborad.prototype.onPressNoteID = function(id){
+	TolerableKeyboard.prototype.onPressNoteID = function(id){
 		if("undefined" === typeof this.keyboardMap[id])
 			return
 
@@ -348,7 +348,7 @@
 		let frequency = getFrequency(this.keyboardMap[id])
 		this.pressNote(frequency)
 	}
-	Keyborad.prototype.pressNote = function(frequency){
+	TolerableKeyboard.prototype.pressNote = function(frequency){
 		//Will be overwritten by user for custom set up
 
 		//autosetup
@@ -362,7 +362,7 @@
 		}
 	}
 	//Takes care of styling the keyboard and finding the frequency. What happens when the note is released is defined in releaseNote()
-	Keyborad.prototype.onReleaseNoteID = function(id){
+	TolerableKeyboard.prototype.onReleaseNoteID = function(id){
 		if("undefined" === typeof this.keyboardMap[id])
 			return
 
@@ -375,7 +375,7 @@
 		let frequency = getFrequency(this.keyboardMap[id])
 	    this.releaseNote(frequency)
 	}
-	Keyborad.prototype.releaseNote = function(frequency){
+	TolerableKeyboard.prototype.releaseNote = function(frequency){
 		//Will be overwritten by user for custom set up
 
 		//autosetup
@@ -392,7 +392,7 @@
         	this.nodes = new_nodes;
 		}
 	}
-	Keyborad.prototype.addKeyBinding = function(key,note){
+	TolerableKeyboard.prototype.addKeyBinding = function(key,note){
 		this.keysMap[key] = note;
 		this.init()
 	}

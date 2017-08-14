@@ -3,29 +3,29 @@
   <head>
     <meta http-equiv="content-type" name="apple-mobile-web-app-capable" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Keyborad</title>
+    <title>Tolerable Keyboard</title>
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
     <link rel="stylesheet" type="text/css" href="css/github.css">
 
-    <script  src="js/superKeyborad.js"></script>
+    <script  src="js/tolerableKeyboard.js"></script>
     <script  src="js/highlight.pack.js"></script>
     <script  src="js/script.js"></script>
   </head>
 
   <body>
     <div class="main">
-      <h1>SUPER KEYBORAD</h1>
+      <h1>TOLERABLE KEYBOARD!</h1>
 
       <p>Easy to set up HTML custom keyboard. Mouse and key bindings, no dependencies, easy to plug into the web audio API. </p>
 
       <h2>DOWNLOAD</h2>
 
-      <p>Grab the <a href="https://github.com/AtActionPark/SuperKeyborad/blob/master/js/superKeyborad.js">full script</a>, or the <a href="https://github.com/AtActionPark/SuperKeyborad/blob/master/js/superKeyborad.min.js">minified version</a>.</p>
+      <p>Grab the <a href="https://github.com/AtActionPark/TolerableKeyboardd/blob/master/js/tolerableKeyboard.js">full script</a>, or the <a href="https://github.com/AtActionPark/TolerableKeyboard/blob/master/js/tolerableKeyboard.min.js">minified version</a>.</p>
 
 
       <h2>SET UP</h2>
 
-      <p>Add the superKeyborad.js file to your project, create a keyborad object and a div to hold it, and voila. You can start playing the final countdown.</p>
+      <p>Add the tolerableKeyboard.min.js file to your project, create a (tolerable) keyboard object and a div to hold it, and voila. You can start playing the final countdown.</p>
       
         <pre><code class="js">
           // In Script file
@@ -33,21 +33,21 @@
           // Set up the keyboard. Settings will fall back on default values if not provided
           // By default, the keyboard will be 3 octaves, starting on a C2
           //   and will connect to a simple square synth 
-          let basicKeyborad = new Keyborad()
+          let basicKeyborad = new TolerableKeyboard()
 
 
           // In HTML file
 
-          // If not divID was specified during creation, the script looks for &lt;div id="keyborad">
+          // If not divID was specified during creation, the script looks for &lt;div id="tolerableKeyboard">
           // If it is not present in the HTML page, the constructor will 
           //   create and append one on the bottom of the page.
           // For further styling, its better to include it manually where needed
-          &lt;div id="keyborad">&lt;/div>;
+          &lt;div id="tolerableKeyboard">&lt;/div>;
         </pre></code>
 
         <p>It can be played with the mouse, or, by default, with the keys A through K for the middle octave.</p>
         
-      <div id="keyborad"></div>
+      <div id="tolerableKeyboard"></div>
       
       <h2>CUSTOM SET UP</h2>
 
@@ -60,9 +60,9 @@
 
         // Settings are optional and will fall back on default values if not provided
         // Here is the full list:
-        let customKeyborad = new Keyborad({
-          divID: 'customKeyborad', //The id of the div that will contain the keyboard
-          // If empty, a new div of class "keyborad" will be appended to the page's body
+        let customKeyborad = new TolerableKeyboard({
+          divID: 'customKeyboard, //The id of the div that will contain the keyboard
+          // If empty, a new div of class "tolerableKeyboard" will be appended to the page's body
           octaves: 2, //Number of octaves
           width:600, //Width of the full keyboard in px
           height:150, //Height of the white notes
@@ -98,7 +98,7 @@
         // We will set up a simple synth 
 
         // For each note, the synth will play 2 detuned oscillators at the note frequency
-        customKeyborad.pressNote = function(frequency){
+        customKeyboard.pressNote = function(frequency){
           let oscillators = [];
 
           let osc = context.createOscillator();
@@ -120,7 +120,7 @@
 
         // For each key released, the synth will loop through the oscillators,
         //   check the frequency, and stop them if they match 
-        customKeyborad.releaseNote = function(frequency){
+        customKeyboard.releaseNote = function(frequency){
           let newNodes = [];
             for (let i = 0; i < nodes.length; i++) {
               if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
@@ -137,16 +137,16 @@
         //by default keys A through L are binded to C3 through C4
         //only one keyboard (the last one created) can be hooked up to the keys
         //thats one the first one is not working
-        customKeyborad.addKeyBinding('Z','F#2')
-        customKeyborad.addKeyBinding('X','F#4')
+        customKeyboard.addKeyBinding('Z','F#2')
+        customKeyboard.addKeyBinding('X','F#4')
 
         // In HTML file
 
-        &lt;div id="keyborad">&lt;/div>;
+        &lt;div id="tolerableKeyboard">&lt;/div>;
       </pre></code>
 
       <button onclick="createKeyboard()""><b>Run</b></button> the code and it shall appear in its magnificent glory.
-      <div id="customKeyborad"></div>
+      <div id="customKeyboard"></div>
 
     </div>
   </body>

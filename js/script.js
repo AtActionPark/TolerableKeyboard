@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function(){ 
     hljs.initHighlightingOnLoad()
     //Set up the keyboard. settings are optional and will fall back on default values if needed
-    let basicKeyborad = new Keyborad()
+    let basicKeyboard = new TolerableKeyboard()
     //createKeyboard()
 }, false);
 
 function createKeyboard(){
-	let customKeyborad = new Keyborad({
-    	divID: 'customKeyborad', //the id of the div that will contain the keyboard
+	let customKeyboard = new TolerableKeyboard({
+    	divID: 'customKeyboard', //the id of the div that will contain the keyboard
     	octaves: 2, //number of octaves
     	width:600, //width of the keyboard. notes' width will depend on both width & octaves
     	height:150,//height of the whit notes
@@ -41,7 +41,7 @@ function createKeyboard(){
     //if not, they need to be filled with the sound playing logic
 
     //for each note, the synth will play 2 oscillators at the note frequency
-    customKeyborad.pressNote = function(frequency){
+    customKeyboard.pressNote = function(frequency){
     	let oscillators = [];
 
 		let osc = context.createOscillator();
@@ -62,7 +62,7 @@ function createKeyboard(){
 	}
 
 	//for each key released, the synth will loop through the oscillators, check the frequency, and stop them if necessary 
-	customKeyborad.releaseNote = function(frequency){
+	customKeyboard.releaseNote = function(frequency){
 	    let newNodes = [];
         for (let i = 0; i < nodes.length; i++) {
             if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
@@ -77,8 +77,8 @@ function createKeyboard(){
 
 	//example of adding a new key binding
 	//by default keys A through L are binded to C3 through C4
-	customKeyborad.addKeyBinding('Z','F#2')
-	customKeyborad.addKeyBinding('X','F#4')
+	customKeyboard.addKeyBinding('Z','F#2')
+	customKeyboard.addKeyBinding('X','F#4')
 }
 
 
