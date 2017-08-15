@@ -8,7 +8,7 @@ Easy to set up HTML custom keyboard. Mouse and key bindings, no dependencies, ea
 ```
 #### Create a keyboard somewhere in your script
 ```javascript
-let basicKeyborad = new TolerableKeyboard()
+let basicKeyboard = new TolerableKeyboard()
 ```
 And voila, instant playable keyboard, hooked up to a simple synth.
 
